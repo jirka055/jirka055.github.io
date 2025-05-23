@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moje profily na sociálních sítích</title>
+  <title>Profily víš jak</title>
   <style>
     :root {
       --primary: #3a7bd5;
@@ -50,6 +50,9 @@
       margin-bottom: 30px;
       font-weight: 600;
       font-size: 2.2em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards 0.2s;
     }
     .profile {
       background: var(--bg-profile);
@@ -59,6 +62,13 @@
       box-shadow: var(--shadow);
       border-left: 5px solid var(--primary);
       border: var(--border-profile);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s, transform 0.4s, box-shadow 0.2s;
+    }
+    .profile.fade-in {
+      opacity: 1;
+      transform: translateY(0);
     }
     h2 {
       color: var(--primary);
@@ -69,18 +79,39 @@
       color: var(--secondary);
       text-decoration: none;
       font-weight: 600;
-      transition: color 0.2s;
+      transition: all 0.2s;
       display: inline-block;
       margin-top: 8px;
       padding: 8px 12px;
       background: var(--light);
       border: 2px solid var(--primary);
       border-radius: 6px;
+      position: relative;
+      overflow: hidden;
     }
     a:hover {
       color: var(--primary);
       background: var(--light);
       text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    /* Ripple efekt při kliknutí */
+    a:active::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%, -50%);
+      transform-origin: 50% 50%;
+    }
+    a:active::after {
+      animation: ripple 0.6s ease-out;
     }
     .counter {
       background: var(--bg-counter);
@@ -92,6 +123,13 @@
       font-size: 1.1em;
       color: var(--dark);
       border: var(--border-profile);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .counter.fade-in {
+      opacity: 1;
+      transform: translateY(0);
     }
     .counter span {
       font-weight: bold;
@@ -110,12 +148,38 @@
       border: 2px solid var(--primary);
       border-radius: 6px;
       font-weight: 600;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .discord-name:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .discord-name:active::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%, -50%);
+      transform-origin: 50% 50%;
+    }
+    .discord-name:active::after {
+      animation: ripple 0.6s ease-out;
     }
     .theme-switch-wrapper {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
     }
     .theme-switch {
       display: inline-block;
@@ -137,8 +201,11 @@
       transition: .4s;
       border-radius: 34px;
     }
+    .slider:hover {
+      background-color: #ffffff;
+    }
     .slider:before {
-      background-color: #fff;
+      background-color: #ffffff;
       bottom: 4px;
       content: "🌙";
       display: flex;
@@ -158,6 +225,16 @@
       content: "☀️";
       transform: translateX(26px);
     }
+    /* Animace */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ripple {
+      0% { transform: scale(0, 0); opacity: 0.6; }
+      20% { transform: scale(25, 25); opacity: 0.4; }
+      100% { transform: scale(40, 40); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -168,7 +245,7 @@
     </label>
   </div>
 
-  <h1>Moje profily na sociálních sítích</h1>
+  <h1>Profily víš jak</h1>
   
   <div class="profile">
     <h2>Instagram</h2>
@@ -188,6 +265,7 @@
   <div class="counter">
     Počet návštěvníků: <span id="count">0</span>
     <p class="note">(Toto počítadlo funguje jen na tomto zařízení.)</p>
+  </div>
 
   <script>
     // Počítadlo návštěv (uloží do localStorage)
@@ -217,6 +295,30 @@
         localStorage.setItem('darkMode', 'false');
       }
     });
+
+    // Animace při scrollování
+    function animateOnScroll() {
+      const profiles = document.querySelectorAll('.profile');
+      const counter = document.querySelector('.counter');
+      const windowHeight = window.innerHeight;
+
+      profiles.forEach((profile, index) => {
+        const profileTop = profile.getBoundingClientRect().top;
+        if (profileTop < windowHeight - 100) {
+          profile.classList.add('fade-in');
+        }
+      });
+
+      const counterTop = counter.getBoundingClientRect().top;
+      if (counterTop < windowHeight - 100) {
+        counter.classList.add('fade-in');
+      }
+    }
+
+    // Spustí animaci při načtení stránky
+    window.addEventListener('load', animateOnScroll);
+    // Spustí animaci při scrollování
+    window.addEventListener('scroll', animateOnScroll);
   </script>
 </body>
 </html>

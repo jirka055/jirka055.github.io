@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profily víš jak</title>
+  <title>Socky</title>
   <style>
     :root {
       --primary: #3a7bd5;
@@ -202,10 +202,10 @@
       border-radius: 34px;
     }
     .slider:hover {
-      background-color: #ffffff;
+      background-color: #aaa;
     }
     .slider:before {
-      background-color: #ffffff;
+      background-color: #fff;
       bottom: 4px;
       content: "🌙";
       display: flex;
@@ -245,7 +245,7 @@
     </label>
   </div>
 
-  <h1>Profily víš jak</h1>
+  <h1>Socky</h1>
   
   <div class="profile">
     <h2>Instagram</h2>
@@ -262,25 +262,14 @@
     <a href="https://discord.gg/wG84xGkG" target="_blank">@jiricek1233</a>
   </div>
 
-<div class="counter">
-  Počet návštěvníků:  
-  <a href="https://www.hitwebcounter.com" target="_blank">
-    <img src="https://hitwebcounter.com/counter/counter.php?page==20737708&style=0024&nbdigits=3&type=page&initCount=0"" alt="web counter" title="web counter" border="0">
-  </a>
-
-</div>
   <div class="counter">
-    Počet návštěvníků: <span id="count">0</span>
-    <p class="note">(Toto počítadlo funguje jen na tomto zařízení.)</p>
+    <p>Počet návštěvníků:</p>
+    <!-- hitwebcounter Code START -->
+    <img src="https://hitwebcounter.com/counter/counter.php?page=20737717&style=0024&nbdigits=5&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>  
+    <!-- hitwebcounter Code END -->
   </div>
 
   <script>
-    // Počítadlo návštěv (uloží do localStorage)
-    let count = localStorage.getItem('pageVisits') || 0;
-    count++;
-    localStorage.setItem('pageVisits', count);
-    document.getElementById('count').textContent = count;
-
     // Dark mode toggle
     const toggle = document.getElementById('theme-checkbox');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');

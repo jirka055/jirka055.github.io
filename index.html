@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moje profily na sociálních sítích</title>
+  <style>
+    :root {
+      --primary: #3a7bd5;
+      --secondary: #00d2ff;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --text: #495057;
+      --white: #ffffff;
+      --shadow: 0 4px 8px rgba(0,0,0,0.1);
+      --bg-main: linear-gradient(to bottom right, var(--light), #e6f7ff);
+      --bg-profile: var(--white);
+      --bg-counter: var(--white);
+      --border-profile: 2px solid var(--primary);
+      --text-color: var(--text);
+    }
+    .dark-mode {
+      --primary: #5b9aff;
+      --secondary: #00c6ff;
+      --light: #1e1e1e;
+      --dark: #e0e0e0;
+      --text: #e0e0e0;
+      --white: #2d2d2d;
+      --shadow: 0 4px 8px rgba(0,0,0,0.4);
+      --bg-main: linear-gradient(to bottom right, #1e1e1e, #2a3a56);
+      --bg-profile: #2d2d2d;
+      --bg-counter: #2d2d2d;
+      --border-profile: 2px solid var(--primary);
+      --text-color: var(--text);
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 650px;
+      margin: 50px auto;
+      padding: 30px;
+      background: var(--bg-main);
+      color: var(--text-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    h1 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 2.2em;
+    }
+    .profile {
+      background: var(--bg-profile);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      border-left: 5px solid var(--primary);
+      border: var(--border-profile);
+    }
+    h2 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 1.5em;
+    }
+    a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--light);
+      border: 2px solid var(--primary);
+      border-radius: 6px;
+    }
+    a:hover {
+      color: var(--primary);
+      background: var(--light);
+      text-decoration: none;
+    }
+    .counter {
+      background: var(--bg-counter);
+      padding: 15px;
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      font-size: 1.1em;
+      color: var(--dark);
+      border: var(--border-profile);
+    }
+    .counter span {
+      font-weight: bold;
+      color: var(--primary);
+    }
+    .note {
+      font-size: 0.9em;
+      color: #6c757d;
+      margin-top: 10px;
+    }
+    .discord-name {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--light);
+      border: 2px solid var(--primary);
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .theme-switch {
+      display: inline-block;
+      height: 34px;
+      position: relative;
+      width: 60px;
+    }
+    .theme-switch input {
+      display: none;
+    }
+    .slider {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      background-color: #fff;
+      bottom: 4px;
+      content: "🌙";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+    input:checked + .slider:before {
+      content: "☀️";
+      transform: translateX(26px);
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox" />
+      <div class="slider"></div>
+    </label>
+  </div>
+
+  <h1>Moje profily na sociálních sítích</h1>
+  
+  <div class="profile">
+    <h2>Instagram</h2>
+    <a href="https://instagram.com/mojmir____" target="_blank">@mojmir____</a>
+  </div>
+
+  <div class="profile">
+    <h2>TikTok</h2>
+    <a href="https://tiktok.com/@jirka055" target="_blank">@jirka055</a>
+  </div>
+
+  <div class="profile">
+    <h2>Discord</h2>
+    <a href="https://discord.gg/wG84xGkG" target="_blank">@jiricek1233</a>
+  </div>
+
+  <div class="counter">
+    Počet návštěvníků: <span id="count">0</span>
+    <p class="note">(Toto počítadlo funguje jen na tomto zařízení.)</p>
+
+  <script>
+    // Počítadlo návštěv (uloží do localStorage)
+    let count = localStorage.getItem('pageVisits') || 0;
+    count++;
+    localStorage.setItem('pageVisits', count);
+    document.getElementById('count').textContent = count;
+
+    // Dark mode toggle
+    const toggle = document.getElementById('theme-checkbox');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Nastaví režim podle localStorage nebo podle systému
+    if (localStorage.getItem('darkMode') === 'true' || 
+        (localStorage.getItem('darkMode') === null && prefersDarkScheme.matches)) {
+      document.body.classList.add('dark-mode');
+      toggle.checked = true;
+    }
+
+    // Přepínání režimu
+    toggle.addEventListener('change', function() {
+      if (this.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
